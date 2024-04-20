@@ -26,5 +26,10 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log('new connection');
+
+    socket.on('message', (data) => {
+        console.log(data);
+        io.emit('newMessage', data);
+    })
     io.emit('new connection', 'new connection');
 });

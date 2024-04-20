@@ -8,44 +8,50 @@ import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 export class DemoElement extends LitElement {
   static get properties() {
     return {
-      /**
-       * The name to say "Hello" to.
-       * @type {string}
-       */
-      name: {type: String},
-
-      /**
-       * The number of times the button has been clicked.
-       * @type {number}
-       */
-      count: {type: Number},
+      messages: { type: Array },
+      value: { type: String }
     };
   }
 
   constructor() {
     super();
-    this.name = 'Bot';
-    this.count = 0;
+    this.messages = [];
+    this.value = '';
     this.socket = io('http://localhost:3000', {
       extraHeaders: {
         "Access-Control-Allow-Origin": "*"
     }});
     this.socket.on('new connection', console.log);
+    this.socket.on('newMessage', (message) => this.updateMessageList(message))
   }
 
   static styles = [style];
 
-  onButtonClick() {
-    this.count++;
+  handleOnChange(e) {
+    this.value = e.target.value;
+  }
+
+  handleOnSubmit(e) {
+    e.preventDefault();
+    this.socket.emit('message', this.value);
+    this.value = '';
+  }
+
+  updateMessageList(message) {
+    console.log(message);
+    this.messages = [...this.messages, message];
   }
 
   render() {
-    const {name, count} = this;
+    const { value, messages } = this;
     return html`
-      <div>Hi, this is a demo element!</div>
-      <div>Like this, you can render reactive properties: ${name}</div>
-      <div>And like this, you can listen to events:</div>
-      <button @click="${this.onButtonClick}">Number of clicks: ${count}</button>
+      <form @submit="${this.handleOnSubmit}">
+        <input type="text" .value=${value} @input=${this.handleOnChange} />
+        <button>Send</button>
+      </form>
+      <ul>
+        ${messages.map(m => html`<li>${m}</li>`)}
+      </ul>
     `;
   }
 }
