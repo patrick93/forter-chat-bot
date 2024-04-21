@@ -1,0 +1,23 @@
+version: '3.5'
+services:
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.2
+    environment:
+      - node.name=es
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+    volumes:
+      - .tmp/es:/usr/share/elasticsearch/data
+    ports:
+      - '127.0.0.1:9200:9200'
+      - '127.0.0.1:9300:9300'
+  es-kibana:
+      restart: 'no'
+      image: docker.elastic.co/kibana/kibana:8.13.2
+      links:
+        - es:elasticsearch
+      environment:
+        - elasticsearch.hosts=http://es:9200
+      ports:
+        - '127.0.0.1:5601:5601'

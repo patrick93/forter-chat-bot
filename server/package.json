@@ -7,7 +7,8 @@
   "scripts": {
     "start": "npm run build && node build/index.js",
     "build": "rimraf ./build",
-    "start:dev": "nodemon"
+    "start:dev": "nodemon",
+    "sync-es-schema": "node cli/sync-es-schema.js"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
+    "@elastic/elasticsearch": "^8.13.1",
     "express": "^4.17.1",
     "socket.io": "^4.5.2"
   }

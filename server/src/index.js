@@ -2,6 +2,9 @@ import express from 'express';
 import httpServer from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
+import { CONFIG } from '../src/config/index.js';
+import { timeStamp } from 'console';
+import { Client } from '@elastic/elasticsearch';
 
 const app = express();
 
@@ -20,6 +23,8 @@ const io = new Server(http, {
     }
 });
 
+const esClient = new Client({ node: CONFIG.ES_HOST });
+
 app.get('/', (req, res) => {
     res.send('Hello World!')
 });
@@ -29,6 +34,14 @@ io.on('connection', (socket) => {
 
     socket.on('message', (data) => {
         console.log(data);
+        esClient.index({
+            index: "chatbot_messages",
+            document: {
+                timestamp: Date.now(),
+                message: data
+            }
+        }).then(response => console.log(response))
+            .catch((err) => console.log(err))
         io.emit('newMessage', data);
     })
     io.emit('new connection', 'new connection');
