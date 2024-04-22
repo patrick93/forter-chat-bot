@@ -45,6 +45,9 @@ export class DemoElement extends LitElement {
   render() {
     const { value, messages } = this;
     return html`
+      <div class="container">
+        Teste
+      </div>
       <form @submit="${this.handleOnSubmit}">
         <input type="text" .value=${value} @input=${this.handleOnChange} />
         <button>Send</button>
