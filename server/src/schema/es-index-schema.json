@@ -9,6 +9,9 @@
         },
         "message": { 
           "type": "text" 
+        },
+        "isQuestion": {
+          "type": "boolean"
         }
       }
     }

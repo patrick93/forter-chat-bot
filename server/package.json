@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "@elastic/elasticsearch": "^8.13.1",
+    "compromise": "^14.13.0",
+    "compromise-sentences": "^0.3.0",
     "express": "^4.17.1",
     "socket.io": "^4.5.2"
   }
