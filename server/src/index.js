@@ -33,14 +33,15 @@ io.on('connection', (socket) => {
     console.log('new connection');
 
     socket.on('message', (data) => {
+        const { message } = data;
         console.log(data);
-        const isQuestion = !!nlp(data).sentences().isQuestion().out('array').length;
+        const isQuestion = !!nlp(message).sentences().isQuestion().out('array').length;
         console.log(isQuestion);
         esClient.index({
             index: "chatbot_messages",
             document: {
                 timestamp: Date.now(),
-                message: data,
+                message,
                 isQuestion
             }
         }).catch((err) => console.log(err));
@@ -52,7 +53,7 @@ io.on('connection', (socket) => {
                         "must": {
                             "match": {
                                 "message": {
-                                    "query": data
+                                    "query": message
                                 }
                             }
                         },
@@ -68,7 +69,7 @@ io.on('connection', (socket) => {
             }).then(response => {
                 console.log(response);
                 if (response.hits.total.value > 0) {
-                    io.emit('newMessage', response.hits?.hits[0]?._source?.message);
+                    io.emit('newMessage', { user: 'Bot', message: response.hits?.hits[0]?._source?.message });
                 }
             }).catch((err) => console.log(err))
         }

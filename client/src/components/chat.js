@@ -1,6 +1,7 @@
 import {LitElement, html} from 'lit';
 import style from './chat.css.js';
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
+import { faker } from '@faker-js/faker';
 
 import './messages-list-element.js';
 import './message-input.js';
@@ -8,6 +9,7 @@ import './message-input.js';
 export class ChatElement extends LitElement {
   static get properties() {
     return {
+      user: { type: String },
       messages: { type: Array }
     };
   }
@@ -15,6 +17,7 @@ export class ChatElement extends LitElement {
   constructor() {
     super();
     this.messages = [];
+    this.user = faker.internet.userName();
     this.socket = io('http://localhost:3000', {
       extraHeaders: {
         "Access-Control-Allow-Origin": "*"
@@ -26,18 +29,19 @@ export class ChatElement extends LitElement {
   static styles = [style];
 
   handleOnSubmit(e) {
-    this.socket.emit('message', e.detail.message);
+    this.socket.emit('message', { user: this.user, message: e.detail.message });
   }
 
   updateMessageList(message) {
+    console.log(message);
     this.messages = [...this.messages, message];
   }
 
   render() {
-    const { messages } = this;
+    const { messages, user } = this;
     return html`
       <div class="container">
-        <messages-list-element messages="${JSON.stringify(messages)}"></messages-list-element>
+        <messages-list-element messages="${JSON.stringify(messages)}" user="${user}"></messages-list-element>
         <message-input-element @onSubmit="${this.handleOnSubmit}"></message-input-element>
       </div>
     `;
