@@ -2,6 +2,8 @@ import {LitElement, html} from 'lit';
 import style from './chat.css.js';
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 
+import './messages-list-element.js';
+
 /**
  * An example element.
  */
@@ -46,17 +48,7 @@ export class ChatElement extends LitElement {
     const { value, messages } = this;
     return html`
       <div class="container">
-        <div class="messages">
-          ${messages.map(m => {
-            return html`
-              <div class="message">
-                <span>
-                  ${m}
-                </span>
-              </div>
-            `;
-          })}
-        </div>
+        <messages-list-element messages="${JSON.stringify(messages)}"></messages-list-element>
         <div class="form-container">
           <form class="form" @submit="${this.handleOnSubmit}">
             <input type="text" class="input" placeholder="Write your message!" .value=${value} @input=${this.handleOnChange} />
