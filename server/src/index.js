@@ -2,7 +2,7 @@ import express from 'express';
 import httpServer from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
-import { getMessageService } from './services/index.js';
+import { getBotService, getMessageService } from './services/index.js';
 
 const app = express();
 
@@ -22,6 +22,7 @@ const io = new Server(http, {
 });
 
 const messageService = getMessageService();
+const botService = getBotService(io);
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
@@ -33,17 +34,8 @@ io.on('connection', (socket) => {
     socket.on('message', (data) => {
         const { message } = data;
         console.log(data);
-        const isQuestion = messageService.isQuestion(message);
-        console.log(isQuestion);
         messageService.saveMessage(message).catch((err) => console.log(err));
-        if (isQuestion) {
-            messageService.searchAnswer(message).then(answer => {
-                console.log(answer);
-                if (answer) {
-                    io.emit('newMessage', { user: 'Bot', message: answer });
-                }
-            }).catch((err) => console.log(err))
-        }
+        botService.processMessage(message).catch((err) => console.log(err));
         io.emit('newMessage', data);
     })
     io.emit('new connection', 'new connection');
