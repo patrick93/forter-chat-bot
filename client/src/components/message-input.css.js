@@ -2,8 +2,8 @@ import {css} from 'lit';
 
 export default css`
 .form-container {
-  margin-bottom: 0;
-  padding: 1rem 1rem 0 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.5rem 0 1.5rem;
 }
 
 .form {

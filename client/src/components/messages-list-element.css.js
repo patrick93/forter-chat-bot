@@ -4,8 +4,7 @@ export default css`
 .messages {
   display: flex;
   flex-direction: column;
-  padding: 0.75rem;
-  overflow-y: auto;
+  padding: 1rem 1.5rem;
 }
 
 .message {
@@ -33,5 +32,9 @@ export default css`
   border-bottom-left-radius: 0.5rem;
   background-color: #2563eb;
   color: #eeeeee;
+}
+
+span {
+  word-break: break-all;
 }
 `;

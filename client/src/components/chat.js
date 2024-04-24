@@ -41,8 +41,8 @@ export class ChatElement extends LitElement {
     const { messages, user } = this;
     return html`
       <div class="container">
-        <messages-list-element messages="${JSON.stringify(messages)}" user="${user}"></messages-list-element>
-        <message-input-element @onSubmit="${this.handleOnSubmit}"></message-input-element>
+        <messages-list-element class="message-list" messages="${JSON.stringify(messages)}" user="${user}"></messages-list-element>
+        <message-input-element class="message-input" @onSubmit="${this.handleOnSubmit}"></message-input-element>
       </div>
     `;
   }
