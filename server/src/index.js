@@ -37,6 +37,5 @@ io.on('connection', (socket) => {
         messageService.saveMessage(message).catch((err) => console.log(err));
         botService.processMessage(message).catch((err) => console.log(err));
         io.emit('newMessage', data);
-    })
-    io.emit('new connection', 'new connection');
+    });
 });

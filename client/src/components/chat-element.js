@@ -1,10 +1,10 @@
 import {LitElement, html} from 'lit';
-import style from './chat.css.js';
+import style from './chat-element.css.js';
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 import { faker } from '@faker-js/faker';
 
 import './messages-list-element.js';
-import './message-input.js';
+import './message-input-element.js';
 
 export class ChatElement extends LitElement {
   static get properties() {
@@ -22,7 +22,6 @@ export class ChatElement extends LitElement {
       extraHeaders: {
         "Access-Control-Allow-Origin": "*"
     }});
-    this.socket.on('new connection', console.log);
     this.socket.on('newMessage', (message) => this.updateMessageList(message))
   }
 

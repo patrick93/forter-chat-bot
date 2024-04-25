@@ -1,5 +1,5 @@
 import { LitElement, html } from "lit";
-import style from './message-input.css.js';
+import style from './message-input-element.css.js';
 
 export class MessagesInputElement extends LitElement {
   static get properties() {
