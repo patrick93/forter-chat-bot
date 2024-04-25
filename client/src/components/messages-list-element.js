@@ -1,5 +1,6 @@
 import { LitElement, html } from "lit";
 import style from './messages-list-element.css.js';
+import './message-element.js';
 
 export class MessagesListElement extends LitElement {
   static get properties() {
@@ -22,14 +23,11 @@ export class MessagesListElement extends LitElement {
       <div class="messages">
         ${messages.map(m => {
           return html`
-            <div class="message ${user === m.user ? 'mine' : ''}">
-              <span class="author">
-                ${m.user}
-              </span>
-              <span>
-                ${m.message}
-              </span>
-            </div>
+            <message-element
+              class="${m.user === user ? 'mine' : ''}"
+              message="${m.message}" 
+              user="${m.user}" 
+              currentuser="${user}"></message-element>
           `;
         })}
       </div>
