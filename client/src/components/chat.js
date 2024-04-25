@@ -33,7 +33,6 @@ export class ChatElement extends LitElement {
   }
 
   updateMessageList(message) {
-    console.log(message);
     this.messages = [...this.messages, message];
   }
 

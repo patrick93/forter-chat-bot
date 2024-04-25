@@ -21,6 +21,9 @@ export class MessagesInputElement extends LitElement {
 
   handleOnSubmit(e) {
     e.preventDefault();
+    if (!this.value) {
+      return ;
+    }
     this.dispatchEvent(new CustomEvent('onSubmit', {
       detail: { message: this.value },
       bubbles: false,
