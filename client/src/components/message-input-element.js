@@ -16,6 +16,7 @@ export class MessagesInputElement extends LitElement {
   static styles = [style];
 
   handleOnChange(e) {
+    //ideally, the value should be sanitized
     this.value = e.target.value;
   }
 

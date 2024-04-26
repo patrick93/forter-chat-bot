@@ -27,6 +27,7 @@ export class ChatElement extends LitElement {
   constructor() {
     super();
     this.messages = [];
+    //ideally, this should be get from the BE after a user has input their user name
     this.user = faker.internet.userName();
     this.socket = getSocket();
     this.socket.on(SOCKET_CHANNELS.NEW_MESSAGE, (message) => this.updateMessageList(message))
