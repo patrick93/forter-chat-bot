@@ -33,13 +33,17 @@ export class ChatElement extends LitElement {
 
   updateMessageList(message) {
     this.messages = [...this.messages, message];
+    setTimeout(() => {
+      const messageListElement = this.shadowRoot.getElementById("message-list");
+      messageListElement.scrollTop = messageListElement.scrollHeight;
+    });
   }
 
   render() {
     const { messages, user } = this;
     return html`
       <div class="container">
-        <messages-list-element class="message-list" messages="${JSON.stringify(messages)}" user="${user}"></messages-list-element>
+        <messages-list-element id="message-list" class="message-list" messages="${JSON.stringify(messages)}" user="${user}"></messages-list-element>
         <message-input-element class="message-input" @onSubmit="${this.handleOnSubmit}"></message-input-element>
       </div>
     `;
