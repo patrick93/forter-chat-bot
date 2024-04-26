@@ -3,7 +3,7 @@ import { CONFIG } from '../src/config/index.js';
 import { initEsSchema } from '../src/schema/index.js';
 
 async function run() {
-  const esClient = new Client({ node: CONFIG.ES_HOST });
+  const esClient = new Client({ node: CONFIG.ES_URL });
   await initEsSchema(esClient);
 }
 

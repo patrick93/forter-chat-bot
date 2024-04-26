@@ -1,3 +1,5 @@
+import { CHATBOT_MESSAGES_INDEX } from '../constants.js';
+
 export default class MessageRepository {
   constructor(esClient) {
     this.esClient = esClient;
@@ -5,7 +7,7 @@ export default class MessageRepository {
 
   async saveMessage(message, isQuestion) {
     await this.esClient.index({
-      index: "chatbot_messages",
+      index: CHATBOT_MESSAGES_INDEX,
       document: {
         timestamp: Date.now(),
         message,
@@ -16,7 +18,7 @@ export default class MessageRepository {
 
   async searchAnswer(message) {
     const response = await this.esClient.search({
-      index: "chatbot_messages",
+      index: CHATBOT_MESSAGES_INDEX,
       query: {
         bool: {
           must: {

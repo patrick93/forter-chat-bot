@@ -1,4 +1,3 @@
-import { Client } from '@elastic/elasticsearch';
 import schema from './es-index-schema.json' assert { type: 'json' };
 
 export async function initEsSchema(esClient) {

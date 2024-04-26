@@ -6,7 +6,7 @@ let messageRepositoryInstance;
 
 export function getMessageRepository() {
   if (!messageRepositoryInstance) {
-    const esClient = new Client({ node: CONFIG.ES_HOST });
+    const esClient = new Client({ node: CONFIG.ES_URL });
     messageRepositoryInstance = new MessageRepository(esClient);
   }
 
