@@ -3,6 +3,7 @@ import style from './chat-element.css.js';
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 import { faker } from '@faker-js/faker';
 import { config } from '../config';
+import { SOCKET_CHANNELS } from '../constants.js';
 
 import './messages-list-element.js';
 import './message-input-element.js';
@@ -28,13 +29,13 @@ export class ChatElement extends LitElement {
     this.messages = [];
     this.user = faker.internet.userName();
     this.socket = getSocket();
-    this.socket.on('newMessage', (message) => this.updateMessageList(message))
+    this.socket.on(SOCKET_CHANNELS.NEW_MESSAGE, (message) => this.updateMessageList(message))
   }
 
   static styles = [style];
 
   handleOnSubmit(e) {
-    this.socket.emit('message', { user: this.user, message: e.detail.message });
+    this.socket.emit(SOCKET_CHANNELS.MESSAGE, { user: this.user, message: e.detail.message });
   }
 
   updateMessageList(message) {

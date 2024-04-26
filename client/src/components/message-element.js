@@ -1,5 +1,6 @@
 import { LitElement, html } from "lit";
 import style from './message-element.css.js';
+import { BOT_USERNAME } from '../constants.js';
 
 export class MessageElement extends LitElement {
   static get properties() {
@@ -26,7 +27,7 @@ export class MessageElement extends LitElement {
 
   render() {
     const { message, user, currentUser, getBotAvatar, getUserAvatar } = this;
-    const isBot = user === 'Bot';
+    const isBot = user === BOT_USERNAME;
     return html`
       <div class="message ${user === currentUser ? 'mine' : ''}">
         <div class="avatar ${ isBot ? 'bot' : '' }">
