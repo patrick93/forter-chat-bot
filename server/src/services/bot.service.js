@@ -11,7 +11,7 @@ export default class BotService {
     if (isQuestion) {
       const answer = await this.messageService.searchAnswer(message);
       if (answer) {
-        this.io.emit(SOCKET_CHANNEL.NEW_MESSAGE, { user: BOT_USERNAME, message: answer });
+        this.io.emit(SOCKET_CHANNEL.NEW_MESSAGE, { author: BOT_USERNAME, message: answer });
       }
     }
   }

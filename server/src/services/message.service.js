@@ -5,9 +5,9 @@ export default class MessageService {
     this.messageRepository = messageRepository;
   }
 
-  async saveMessage(message) {
+  async saveMessage(message, author) {
     const isQuestion = this.isQuestion(message);
-    await this.messageRepository.saveMessage(message, isQuestion);
+    await this.messageRepository.saveMessage({ message, author, isQuestion });
   }
 
   async searchAnswer(message) {

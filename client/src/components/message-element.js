@@ -7,7 +7,7 @@ export class MessageElement extends LitElement {
     return {
       message: { type: String },
       user: { type: String },
-      currentUser: { type: String }
+      author: { type: String }
     }
   }
 
@@ -26,16 +26,16 @@ export class MessageElement extends LitElement {
   }
 
   render() {
-    const { message, user, currentUser, getBotAvatar, getUserAvatar } = this;
-    const isBot = user === BOT_USERNAME;
+    const { message, author, user, getBotAvatar, getUserAvatar } = this;
+    const isBot = author === BOT_USERNAME;
     return html`
-      <div class="message ${user === currentUser ? 'mine' : ''}">
+      <div class="message ${author === user ? 'mine' : ''}">
         <div class="avatar ${ isBot ? 'bot' : '' }">
           ${ isBot ? getBotAvatar() : getUserAvatar() }
         </div>
         <div class="message-body">
           <span class="author">
-            ${user}
+            ${author}
           </span>
           <span>
             ${message}

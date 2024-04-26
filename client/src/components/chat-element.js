@@ -35,7 +35,7 @@ export class ChatElement extends LitElement {
   static styles = [style];
 
   handleOnSubmit(e) {
-    this.socket.emit(SOCKET_CHANNELS.MESSAGE, { user: this.user, message: e.detail.message });
+    this.socket.emit(SOCKET_CHANNELS.MESSAGE, { author: this.user, message: e.detail.message });
   }
 
   updateMessageList(message) {

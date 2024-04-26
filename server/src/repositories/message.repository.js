@@ -5,13 +5,14 @@ export default class MessageRepository {
     this.esClient = esClient;
   }
 
-  async saveMessage(message, isQuestion) {
+  async saveMessage({ message, isQuestion, author }) {
     await this.esClient.index({
       index: CHATBOT_MESSAGES_INDEX,
       document: {
         timestamp: Date.now(),
         message,
-        isQuestion
+        isQuestion,
+        author
       }
     });
   }

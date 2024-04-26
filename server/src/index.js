@@ -27,9 +27,8 @@ const botService = getBotService(io);
 
 io.on(SOCKET_CHANNEL.CONNECTION, (socket) => {
     socket.on(SOCKET_CHANNEL.MESSAGE, (data) => {
-        const { message } = data;
-        console.log(data);
-        messageService.saveMessage(message).catch((err) => console.log(err));
+        const { message, author } = data;
+        messageService.saveMessage(message, author).catch((err) => console.log(err));
         botService.processMessage(message).catch((err) => console.log(err));
         io.emit(SOCKET_CHANNEL.NEW_MESSAGE, data);
     });

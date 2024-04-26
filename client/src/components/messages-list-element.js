@@ -24,10 +24,10 @@ export class MessagesListElement extends LitElement {
         ${messages.map(m => {
           return html`
             <message-element
-              class="${m.user === user ? 'mine' : ''}"
+              class="${m.author === user ? 'mine' : ''}"
               message="${m.message}" 
-              user="${m.user}" 
-              currentuser="${user}"></message-element>
+              author="${m.author}" 
+              user="${user}"></message-element>
           `;
         })}
       </div>
