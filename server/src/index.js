@@ -4,6 +4,7 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import { getBotService, getMessageService } from './services/index.js';
 import { SOCKET_CHANNEL } from './constants.js';
+import reportError from './utils/reportError.js';
 
 const app = express();
 
@@ -28,8 +29,8 @@ const botService = getBotService(io);
 io.on(SOCKET_CHANNEL.CONNECTION, (socket) => {
     socket.on(SOCKET_CHANNEL.MESSAGE, (data) => {
         const { message, author } = data;
-        messageService.saveMessage(message, author).catch((err) => console.log(err));
-        botService.processMessage(message).catch((err) => console.log(err));
+        messageService.saveMessage(message, author).catch((err) => reportError(err));
+        botService.processMessage(message).catch((err) => reportError(err));
         io.emit(SOCKET_CHANNEL.NEW_MESSAGE, data);
     });
 });
