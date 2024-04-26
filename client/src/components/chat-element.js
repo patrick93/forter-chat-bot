@@ -2,9 +2,18 @@ import {LitElement, html} from 'lit';
 import style from './chat-element.css.js';
 import { io } from "https://cdn.socket.io/4.4.1/socket.io.esm.min.js";
 import { faker } from '@faker-js/faker';
+import { config } from '../config';
 
 import './messages-list-element.js';
 import './message-input-element.js';
+
+function getSocket() {
+  return io(config.SOCKER_URL, {
+    extraHeaders: {
+      "Access-Control-Allow-Origin": "*"
+    }
+  });
+}
 
 export class ChatElement extends LitElement {
   static get properties() {
@@ -18,10 +27,7 @@ export class ChatElement extends LitElement {
     super();
     this.messages = [];
     this.user = faker.internet.userName();
-    this.socket = io('http://localhost:3000', {
-      extraHeaders: {
-        "Access-Control-Allow-Origin": "*"
-    }});
+    this.socket = getSocket();
     this.socket.on('newMessage', (message) => this.updateMessageList(message))
   }
 
